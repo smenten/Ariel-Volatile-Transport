@@ -5,9 +5,9 @@
 
 g = 0.249;                              % gravity Ariel in m/s^2
 r = 578900;                             % average radius Ariel in m
-% m = 1.27e21;                            % mass of Charon in kg
+m = 1.27e21;                            % mass of Ariel in kg
 miu = 7.3106e-26;                       % molar mass one CO2 molecule in kg
-% p = 8.93e40;                            % number of molecules of CH4
+% p = 8.93e40;                           % number of molecules of CH4
 sa = 4*pi*(r^2);                        % surface area of Ariel in m^2   
 rho_m = 522 ;                           % density of methane ice in kg/m^3
 rho_c = 1562 ;                          % density of carbon dioxide ice in kg/m^3
@@ -154,7 +154,7 @@ longitude320 = 0;
 longitude330 = 0;
 longitude340 = 0;
 longitude350 = 0;
-longitude360 = 0;
+
 
 
 escape = 0;
@@ -166,15 +166,15 @@ for z = 1:10000
 
 lat=[];
 lon=[];
-lat(1) = -30 + (10-(-30)) .* rand(1,1) ;  
-lon(1) = 120 + (210-120) .* rand(1,1);   
+lat(1) = 75; %-30 + (10-(-30)) .* rand(1,1) ;  
+lon(1) =  180 + (360-180) .* rand(1,1);   
 ev = sqrt(2*g*r); 
 
 i = 2;
 v=0 ;
 while v < ev
      
-[T] = chooseTemperature(lat(i-1), 330)  ;               %Charon Surface Temp
+[T] = chooseTemperature(lat(i-1), 0)  ;               %Charon Surface Temp
 theta = 0.5*acosd((2*(0 + (1-0) .* rand(1,1)))-1) ;     %weighted random theta value between 0 and 90 
 azimuth = 0 + (360-0) .* rand(1,1) ;                    %random azimuth value between 0 and 360
 T0 = T ;
@@ -222,7 +222,7 @@ i_sc = i_src./rho_c.*sinyr ;
          break
     end
 % 
-    if i_sc > 1e-16
+    if i_sc > 1e-45
       %  disp('Particle enters Mordor') 
         break
     end
@@ -489,7 +489,7 @@ end
        longitude350 = longitude350 +1 ;
     end
     if (lon(i) <= 360) && (lon(i) >= 355)
-       longitude360 = longitude360 +1 ;
+       longitude0 = longitude0 +1 ;
     end
 
 
@@ -520,14 +520,30 @@ end
 
 %% Bar Graph Latitude Plots
 
-lats =[] ;
+latitudes = -90:5:90 ;
+nums =[latituden90 latituden85 latituden80 latituden75 latituden70 latituden65 latituden60 latituden55 latituden50 latituden45 latituden40 latituden35 latituden30 latituden25 latituden20 latituden15 latituden10 latituden5 latitude0 latitude5 latitude10 latitude15 latitude20 latitude25 latitude30 latitude35 latitude40 latitude45 latitude50 latitude55 latitude60 latitude65 latitude70 latitude75 latitude80 latitude85 latitude90 ] ;
 
-
+bar(latitudes, nums)
+xlim ([-90 90]);
+ylim ([0 5000]);
 
 %% Bar Graph Longitude Plots 
-lons =[] ;
+
+longitudes = 0:10:350 ;
+nums1=[longitude0 longitude10 longitude20 longitude30 longitude40 longitude50 longitude60 longitude70 longitude80 longitude90 longitude100 longitude110 longitude120 longitude130 longitude140 longitude150 longitude160 longitude170 longitude180 longitude190 longitude200 longitude210 longitude220 longitude230 longitude240 longitude250 longitude260 longitude270 longitude280 longitude290 longitude300 longitude310 longitude320 longitude330 longitude340 longitude350 ] ;
+
+bar(longitudes, nums1)
+
+xlim ([0 360]);
+ylim ([0 5000]);
+
+%% Sublimation Rate by Latitude
+%need: to load different temperature plots and calulate sublimation rate at
+%every point of the year
+%then sum the rate and divide by the length of the array
 
 
+% sum()/length(rates) ; 
 
 %% THICKNESS CALCULATION
 

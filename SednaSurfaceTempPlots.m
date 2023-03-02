@@ -1,0 +1,1 @@
+[ Tsurf ] = thermal_charon_f(45) ; 
